@@ -1,0 +1,70 @@
+body {
+    font-family: 'Merriweather', serif;
+    background: url(./img/green-fern-leaf-2748757.jpg) no-repeat center center/cover;
+}
+
+#add-form h1,
+#add-form p {
+    text-align: center;
+}
+
+#add-form h1 {
+    font-size: 2.5rem;
+    color: #f3f3eb;;
+    text-shadow: 2px 2px 2px #000;
+    letter-spacing: 1rem;
+}
+
+#add-form p {
+    font-size: 1rem;
+    padding: 1rem 0;
+    font-weight: bold;
+}
+
+.colored-word {
+    background-color: #f99500;;
+    padding: 3px;
+}
+
+#add-form .form-group {
+    margin-bottom: 20px;
+}
+
+#add-form label {
+    display: block;
+    margin-bottom: 0;
+}
+#add-form input {
+    margin-bottom: 1rem;
+}
+
+#add-form input,
+ #add-form textarea {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#add-form textarea {
+    height: 160px;
+}
+
+#add-form input:focus,
+ #add-form textarea:focus {
+     outline: none;
+     border-color: #5ab1c0;
+ }
+
+ #add-form button {
+     margin-top: 10px;
+ }
+
+ .btn {
+    display: inline-block;
+    border: none;
+    background: #f99500;
+    color: #fff;
+    padding: 0.5rem 1.3rem;
+    border-radius: 5px;
+    margin: 0.3rem;
+}

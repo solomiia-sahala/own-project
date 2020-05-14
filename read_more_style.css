@@ -1,0 +1,109 @@
+/* Gereral styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Merriweather', serif;
+    background-color: #f3f3eb;
+}
+
+section .grid-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* image properties */
+section .grid-content .image {
+    width: 50vw;
+    height: 80vh;
+}
+
+section .grid-content .image img {
+    background-repeat: no-repeat;
+    height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+/* text properties */
+section .grid-content .content {
+    width: 90%;
+    text-align: center;
+}
+
+section .grid-content .content h1 {
+    margin: 4rem;
+}
+
+/* button styling  */
+
+section button {
+    display: block;
+    margin: auto;
+}
+
+.btn {
+    border: none;
+    background: #f99500;
+    color: #fff;
+    padding: 0.5rem 1.3rem;
+    border-radius: 5px;
+}
+
+/* hr line  */
+
+hr.style-seven {
+    margin-top: 1rem;
+    overflow: visible;
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+
+hr.style-seven:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+/* footer style */
+
+.footer-info {
+    background: rgb(243, 243, 235);
+    background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgba(153, 145, 118, 1) 39%, rgba(122, 110, 70, 1) 100%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.footer-info .number {
+    border-bottom: 1px solid #000;
+    border-bottom-left-radius: 50px 20px;
+    padding-bottom: 1rem;
+}
+
+.footer-info .copy-right {
+    border-bottom: 1px solid #000;
+    border-bottom-right-radius: 50px 20px;
+}
+
+.footer-info h4 {
+    font-size: 0.9rem;
+}
