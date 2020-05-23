@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <header>
         <div id="header-container">
             <img src="./img/action-blur-car-child-386009.jpg" alt="car">
@@ -29,8 +28,8 @@
 
     <section id="blog">
         <h2>Find more info with our <span class="colored-word">articles!</span></h2>
-        <div class="articles-container">
-            <article class="post">
+        <div class="articles-container" id="grid_container">
+            <!-- <article class="post">
                 <img src="./img/house-on-green-landscape-against-sky-314937.jpg" alt="article-1">
                 <div>
                     <h3>The least-visited countries in Europe</h3>
@@ -62,16 +61,93 @@
                         sunt.</p>
                     <button class="btn">Read More...</button>
                 </div>
-            </article>
-
-
+            </article> -->
         </div>
-
-
-
     </section>
 
+    <div class="add-article">
+        <a href="create_article.html"><span>Create article</span></a>
+    </div>
 
+    <hr class="style-seven">
+
+    <footer id="footer">
+        <section>
+
+        </section>
+    </footer>
+
+    <script>
+        // store all data in LocalStorage
+
+        // localStorage.setItem('article_1', JSON.stringify({
+        //     'header': 'The least-visited countries in Europe',
+        //     'description' : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad laudantium quisquam corrupti repellendus praesentium perspiciatis quam asperiores! Unde iste earum sapiente possimus iusto.Magni, ipsam dolor! Ipsum atque aperiam corrupti?',
+        //     'image' : './img/house-on-green-landscape-against-sky-314937.jpg',
+        // }));
+
+        // localStorage.setItem('article_2', JSON.stringify({
+        //     'header': 'Walk hard, play hard',
+        //     'description' : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad laudantium quisquam corrupti repellendus praesentium perspiciatis quam asperiores! Unde iste earum sapiente possimus iusto.Magni, ipsam dolor! Ipsum atque aperiam corrupti?',
+        //     'image' : './img/man-standing-on-green-grass-field-under-white-sky-1660898.jpg',
+        // }));
+
+        // localStorage.setItem('article_3', JSON.stringify({
+        //     'header': 'The year to plan a trip with friends',
+        //     'description' : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad laudantium quisquam corrupti repellendus praesentium perspiciatis quam asperiores! Unde iste earum sapiente possimus iusto.Magni, ipsam dolor! Ipsum atque aperiam corrupti?',
+        //     'image' : './img/road-nature-trees-branches-38537.jpg',
+        // }));
+
+
+        // get all keys with data
+
+
+        const url = 'https://myourway.firebaseio.com/trip-articles.json';
+
+        async function getData(url) {
+            let response = await fetch(url);
+            if (response.ok) {
+                let json = await response.json();
+                let keys = Object.keys(json);
+                for (let key of keys) {
+                    createElem(json[key], key);
+                }
+            } else {
+                alert(`Error: ${response.status}`);
+            }
+
+        }
+
+
+        // generate new article in grid_container
+        function createElem(article, key) {
+            grid_container.insertAdjacentHTML('beforeend', '<article class="post">'
+                + `<img src="${article.image}" alt="article-2">`
+                + `<div><h3>${article.header}</h3>`
+                + `<p>${article.description}</p>`
+                + `<button id="${key}" class="btn readMe_button">Read More...</button></div></article>`);
+
+            document.getElementById(key).onclick = function () {
+                let url = new URL('file:///Users/ssahala/Documents/own-project/' + 'read_me.html');
+                url.searchParams.set('id', key);
+                window.location.pathname = url;
+
+            }
+        }
+
+        // let url = new URL(window.location.href);
+        // let header = url.searchParams.get('header');
+        // let description = url.searchParams.get('description');
+        // let image = url.searchParams.get('myFile');
+
+        // if (header && description && image) {
+        //     createElem(header, description, image);
+        // } 
+        getData(url);
+
+
+
+    </script>
 
 </body>
 

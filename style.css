@@ -128,3 +128,46 @@ hr.style-seven:before {
     opacity: 0.8;
     color: #000;
 }
+
+
+/* Add article button */
+
+.add-article {
+    text-align: center;
+    margin: 1rem;
+}
+.add-article a {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.3rem 2.3rem;
+    border-radius: 7px;
+    margin: 0.9rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.add-article a span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .add-article a span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .add-article a:hover span {
+    padding-right: 25px;
+  }
+  
+  .add-article a:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
