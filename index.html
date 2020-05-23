@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="http://localhost:3000/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <title>Share Travel Way</title>
 </head>
@@ -12,7 +12,7 @@
 <body>
     <header>
         <div id="header-container">
-            <img src="./img/action-blur-car-child-386009.jpg" alt="car">
+            <img src="http://localhost:3000/static/img/action-blur-car-child-386009.jpg" alt="car">
 
             <div class="prime-info">
                 <h1>Share <span class="colored-word">your way</span> to know more about secret places!</h1>
@@ -66,7 +66,7 @@
     </section>
 
     <div class="add-article">
-        <a href="create_article.html"><span>Create article</span></a>
+        <a href="create_article"><span>Create article</span></a>
     </div>
 
     <hr class="style-seven">
@@ -128,9 +128,9 @@
                 + `<button id="${key}" class="btn readMe_button">Read More...</button></div></article>`);
 
             document.getElementById(key).onclick = function () {
-                let url = new URL('file:///Users/ssahala/Documents/own-project/' + 'read_me.html');
-                url.searchParams.set('id', key);
-                window.location.pathname = url;
+                // let url = new URL('http://localhost:3000/read_me');
+                // url.searchParams.set('id', key);
+                window.location.pathname = `read_me/${key}`;
 
             }
         }
