@@ -1,0 +1,26 @@
+{
+  "name": "myourway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solomiia-sahala/own-project.git"
+  },
+  "files":[
+    "public/"
+  ],
+  "author": "SS & WKYN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/solomiia-sahala/own-project/issues"
+  },
+  "homepage": "https://github.com/solomiia-sahala/own-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
