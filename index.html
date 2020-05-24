@@ -6,10 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://localhost:3000/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
     <title>Share Travel Way</title>
 </head>
 
 <body>
+    <div id="box">
+        <div id="box-inner"></div>
+
+        <form>
+            <h4>Hello. Please, sing in!</h4>
+            <table>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="email" id="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td>
+                        <input type="password" id="password" placeholder="at least 6 characters">
+                    </td>
+                </tr>
+                <tr>
+                    <td><button id="sing-in" class="btn">Sing in</button></td>
+                </tr>
+            </table>
+            <h4>No account yet? Click to <a href="log_in">create</a>.</h4>
+        </form>
+    </div>
+
     <header>
         <div id="header-container">
             <img src="http://localhost:3000/static/img/action-blur-car-child-386009.jpg" alt="car">
@@ -19,6 +47,7 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae rem magni fugiat quis, totam odio
                     veniam perferendis earum voluptates. Labore! Vitae rem magni fugiat quis, totam odio
                     veniam perferendis earum voluptates.</p>
+                <button id="logOut" class="btn">Log out!</button>
             </div>
         </div>
     </header>
@@ -145,7 +174,54 @@
         // } 
         getData(url);
 
+        //log in feature
 
+        //TODO extract to js modele to avoid duplication
+        let firebaseConfig = {
+            apiKey: "AIzaSyCfUMs20JHDtBfXUWKFlO5FQWQqjW2xQhg",
+            authDomain: "myourway.firebaseapp.com",
+            databaseURL: "https://myourway.firebaseio.com",
+            projectId: "myourway",
+            storageBucket: "myourway.appspot.com",
+            messagingSenderId: "214953978170",
+            appId: "1:214953978170:web:532e1bafdd6ce62d064803"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().onAuthStateChanged(user => {
+            //TODO make more meaningful)
+            console.log('state: ' + (user == null ? 'logged in' : 'logged out'));
+            updateSingInView();
+        });
+
+        function updateSingInView() {
+            document.getElementById('box').style.setProperty('display', 
+                    firebase.auth().currentUser != null ? 'none' : 'block');
+        }
+
+        document.getElementById('sing-in').onclick = async function (e) {
+            e.preventDefault();
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            
+            try {
+                await firebase.auth().signInWithEmailAndPassword(email, password);
+            } catch (err) {
+                alert(err.message);
+                return;
+            }
+        }
+
+        document.getElementById('logOut').onclick = async function () {
+            try {
+                await firebase.auth().signOut();
+            }
+            catch (error) {
+                alert(error.message);
+            }
+        }
 
     </script>
 

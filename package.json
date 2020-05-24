@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/solomiia-sahala/own-project.git"
   },
-  "files":[
+  "files": [
     "public/"
   ],
   "author": "SS & WKYN",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/solomiia-sahala/own-project#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "firebase": "^7.14.5"
   }
 }
