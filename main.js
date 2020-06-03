@@ -11,8 +11,12 @@ app.get('/read_me/:id', (request, response) => {
 app.get('/create_article', (request, response) => {
     response.sendFile(__dirname + '/create_article.html')
 })
-app.get('/log_in', (request, response) => {
-    response.sendFile(__dirname + '/log_in.html')
+app.get('/sing_up', (request, response) => {
+    response.sendFile(__dirname + '/sing_up.html')
+})
+
+app.get('/user_profile/:id', (request, response) => {
+    response.sendFile(__dirname + '/my_profile.html')
 })
 
 app.listen(port, (err) => {

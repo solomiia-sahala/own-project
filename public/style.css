@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #999176;
+    --primary-color: #f8e4c9;
     --secondary-color: #f99500;
-    --light-color: #f3f3eb;
+    --light-color: #f2f2f2;
     --dark-color: #333;
     --max-width: 100vw;
 }
@@ -30,8 +30,8 @@ body {
     margin: 0.3rem;
 }
 
-
 /* box for sing in form */
+
 #box {
     position: fixed;
     left: 0;
@@ -40,7 +40,6 @@ body {
     height: 100%;
     z-index: 999;
     display: none;
-
 }
 
 #box-inner {
@@ -71,25 +70,34 @@ body {
 #box form h4 {
     font-size: 0.9rem;
 }
+
 /* Header */
 
 #header-container {
- width: 100vw;
- height: 590px;
+    width: 100vw;
+    height: 590px;
 }
 
-#header-container img {
+#myVideo {
+    object-fit: cover;
+    min-width: 100%;
+    height: 100%;
+}
+
+/* for image if needed */
+
+/* #header-container img {
     object-fit: cover;
     width: 100%;
     height: 100%;
     opacity: 0.8;
-}
+} */
 
 .prime-info {
     position: absolute;
     top: 120px;
     margin-left: 2rem;
-    }
+}
 
 .prime-info h1 {
     width: 60%;
@@ -103,15 +111,89 @@ body {
     font-size: 1.1rem;
     font-weight: bold;
     width: 40%;
-}   
+}
 
 .colored-word {
     background-color: var(--secondary-color);
     padding: 3px;
+}
 
+/* user profile style */
+
+#header-container #user {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+/* logo */
+
+#logo {
+    width: 60px;
+    height: 60px;
+}
+
+/* drow down menu */
+
+.topnav {
+    overflow: hidden;
+    /* background-color: #333; */
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 17px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 124px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: auto;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: rgb(134, 134, 134);
+    color: white;
+}
+
+.dropdown-content a:hover {
+    background-color: rgb(212, 224, 235);
+    /* color: black; */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#name {
+    text-shadow: 2px 2px 2px #000;
 }
 
 /* Style of hr line */
+
 hr.style-seven {
     overflow: visible;
     height: 30px;
@@ -120,7 +202,8 @@ hr.style-seven {
     border-width: 1px 0 0 0;
     border-radius: 20px;
 }
-hr.style-seven:before { 
+
+hr.style-seven:before {
     display: block;
     content: "";
     height: 30px;
@@ -133,21 +216,22 @@ hr.style-seven:before {
 
 /* Blog section */
 
-
 #blog h2 {
     text-align: center;
     font-size: 2rem;
 }
 
- #blog .articles-container {
+#blog .articles-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;  
+    grid-gap: 1rem;
 }
+
 #blog .articles-container .post {
     margin: 8px;
     border: 1px solid var(--primary-color);
 }
+
 #blog .articles-container .post img {
     width: 450px;
 }
@@ -157,7 +241,7 @@ hr.style-seven:before {
 }
 
 #blog .articles-container .post h3 {
-   font-style: italic;
+    font-style: italic;
 }
 
 #blog .articles-container .post p {
@@ -170,16 +254,16 @@ hr.style-seven:before {
     color: #000;
 }
 
-
 /* Add article button */
 
 .add-article {
     text-align: center;
     margin: 1rem;
 }
+
 .add-article a {
     background: var(--primary-color);
-    color: #fff;
+    color: #000;
     padding: 0.3rem 2.3rem;
     border-radius: 7px;
     margin: 0.9rem;
@@ -193,22 +277,50 @@ hr.style-seven:before {
     display: inline-block;
     position: relative;
     transition: 0.5s;
-  }
-  
-  .add-article a span:after {
+}
+
+.add-article a span:after {
     content: '\00bb';
     position: absolute;
     opacity: 0;
     top: 0;
     right: -20px;
     transition: 0.5s;
-  }
-  
-  .add-article a:hover span {
+}
+
+.add-article a:hover span {
     padding-right: 25px;
-  }
-  
-  .add-article a:hover span:after {
+}
+
+.add-article a:hover span:after {
     opacity: 1;
     right: 0;
-  }
+}
+
+/* footer style */
+
+.footer-info {
+    background: rgb(243, 243, 235);
+    background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgb(221, 168, 107) 39%, rgb(230, 155, 42) 100%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.footer-info .number {
+    border-bottom: 1px solid #000;
+    border-bottom-left-radius: 50px 20px;
+    padding-bottom: 1rem;
+}
+
+.footer-info .copy-right {
+    border-bottom: 1px solid #000;
+    border-bottom-right-radius: 50px 20px;
+}
+
+.footer-info h4 {
+    font-size: 0.9rem;
+}

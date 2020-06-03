@@ -62,13 +62,14 @@
         const path = window.location.pathname.split('/');
         let id = path[path.length - 1];
 
-        const url = 'https://myourway.firebaseio.com/trip-articles.json';
+        
 
-        async function getData(url, id) {
+        async function getData(id) {
+            const url = `https://myourway.firebaseio.com/trip-articles/${id}.json`;
             let response = await fetch(url);
             if (response.ok) {
                 let json = await response.json();
-                displayArticle(json[id]);
+                displayArticle(json);
             } else {
                 alert(`Error: ${response.status}`);
             }
@@ -81,7 +82,7 @@
                 + `<p>${id.description}</p></div>`);
         }
 
-        getData(url, id);
+        getData(id);
 
         document.getElementById('back-btn').onclick = function () {
             window.location.pathname = `/`;

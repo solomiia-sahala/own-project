@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth</title>
+    <link rel="stylesheet" href="http://localhost:3000/static/styles/sign-up.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+</head>
+
+<body>
+
+    <h1>Authentication Page</h1>
+    <h3>Please, <span class="colored-word">sing up</span>!</h3>
+    <div class="signUp-form">
+        <form>
+            <div>
+                <label for="name">Name:</label> <br>
+                <input type="text" id="name">
+            </div>
+            <div>
+                <label for="surname">Surname:</label> <br>
+                <input type="text" id="surname">
+            </div>
+            <div>
+                <label for="nickname">Nickname:</label> <br>
+                <input type="text" id="nickname">
+            </div>
+            <div>
+                <label for="email">Email:</label> <br>
+                <input type="email" id="email">
+            </div>
+            <div>
+                <label for="password">Password:</label> <br>
+                <input type="password" id="password" placeholder="at least 6 characters"></input>
+            </div>
+        </form>
+        <button id="startSignIn" class="btn">Submit</button> <br>
+        <button id="back-btn" class="btn">Back</button>
+    </div>
+    
+
+    <hr class="style-seven">
+
+    <footer>
+        <section class="footer-info">
+            <div class="number">
+
+                <h4><i class="fas fa-phone fa-1x"></i> Call:</h4>
+                <p>456-23-568</p>
+                <p>125-33-223</p>
+            </div>
+
+            <div class="email">
+                <h4><i class="fas fa-envelope-open-text fa-1x"></i> Contact</h4>
+                <p>myourway@link.com</p>
+            </div>
+
+            <div class="social">
+                <h4>Follow us</h4>
+                <i class="fab fa-twitter fa-2x"></i>
+                <i class="fab fa-facebook fa-2x"></i>
+                <i class="fab fa-instagram fa-2x"></i>
+            </div>
+
+            <div class="copy-right">
+                <p>&copy; 2020 by SS and Wkyn</p>
+                <p>Created by practice lessons</p>
+            </div>
+
+        </section>
+
+    </footer>
+
+    <script src="http://localhost:3000/static/js/sing_up.js"></script>
+</body>
+
+</html>

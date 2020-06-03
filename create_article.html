@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="http://localhost:3000/static/create_article_style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
+    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
     <title>Create Article</title>
 </head>
 
@@ -32,15 +36,16 @@
             </form>
             <button id="submit-form" class="btn">Submit</button>
         </div>
+        <button id="back-btn" class="btn">Back</button>
 
     </section>
 
-
+<!-- 
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script> -->
 
-    <script>
+    <!-- <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyCfUMs20JHDtBfXUWKFlO5FQWQqjW2xQhg",
@@ -53,7 +58,7 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-    </script>
+    </script> -->
 
     <script>
 
@@ -81,7 +86,7 @@
             };
 
             // Upload file and metadata to the object 'images/mountains.jpg'
-            var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
+            let uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 
             // Listen for state changes, errors, and completion of the upload.
            return new Promise(function(resolve, reject) {
@@ -101,6 +106,10 @@
             let image = await uploadImage(document.getElementById('image').files[0]);
             await sendForm(image);
             window.location.pathname = '';
+        }
+
+        document.getElementById('back-btn').onclick = function () {
+            window.location.pathname = `/`;
         }
 
 

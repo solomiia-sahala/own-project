@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://localhost:3000/static/styles/my_profile.css">
+    <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
+    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <script src="http://localhost:3000/static/js/my_profile.js"></script>
+
+</head>
+
+<body>
+    <section>
+        <div class="grid">
+            <div id="image-section">
+                <div id="user_image">
+                </div>
+                <input id="selectedFile" type="file" style="display: none" onchange="getUserImage()">
+                <button class="btn" onclick="document.getElementById('selectedFile').click();">Upload Picture</button>
+            </div>
+            <div id="general">
+                <button class="btn" onclick="changePassword();">Change password</button>
+                <br><br><br><br><br><br>
+                <a href="/">Go to main page</a>
+            </div>
+        </div>
+    </section>
+    <hr class="style-seven">
+    <div class="add-info">
+        <p><i class="fas fa-info-circle"></i> ADDITIONAL INFO</p>
+    </div>
+    <hr class="style-seven">
+
+    <section class="info-section">
+        <div id="about">
+            <h4>About me: <i class="far fa-edit" onclick="showEditArea('about');"></i></h4>
+            <p></p>
+            <div class="edit-text">
+                <textarea rows="6" cols="70"></textarea><br>
+                <button class="btn" onclick="saveInfo('about');">SAVE</button><button class="btn"
+                    onclick="cancelSaveInfo('about');">CANCEL</button>
+            </div>
+        </div>
+        <div id="travelStory">
+            <h4>My first travelling: <i class="far fa-edit" onclick="showEditArea('travelStory');"></i></h4>
+            <p></p>
+            <div class="edit-text">
+                <textarea rows="6" cols="70"></textarea><br>
+                <button class="btn edit-ok" onclick="saveInfo('travelStory');">OK</button><button
+                    class="btn edit-cancel" onclick="cancelSaveInfo('travelStory');">CANCEL</button>
+            </div>
+        </div>
+        <div id="hobbies">
+            <h4>Hobbies: <i class="far fa-edit" onclick="showEditArea('hobbies')"></i></h4>
+            <p></p>
+            <div class="edit-text">
+                <textarea rows="6" cols="70"></textarea><br>
+                <button class="btn edit-ok" onclick="saveInfo('hobbies');">OK</button><button class="btn edit-cancel"
+                    onclick="cancelSaveInfo('hobbies');">CANCEL</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
