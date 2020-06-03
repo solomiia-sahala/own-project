@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    background: url('http://localhost:3000/static/img/nature-photography-2742812.jpg') no-repeat center center/cover;
+    font-family: 'Merriweather', serif;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 2rem;
+    color: #fff;
+    text-shadow: 2px 3px 3px #000;
+}
+
+h3 {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 3rem;
+}
+
+.colored-word {
+    background-color: #f99500;
+    ;
+    padding: 3px;
+}
+
+.signUp-form {
+    margin: 7px;
+}
+
+.signUp-form label {
+    display: block;
+    margin-bottom: 0;
+}
+
+.signUp-form input {
+    margin-bottom: 0.8rem;
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.signUp-form input:focus {
+    outline: none;
+    border-color: #5ab1c0;
+}
+
+.signUp-form button {
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    background: #f99500;
+    color: #fff;
+    padding: 0.5rem 1.3rem;
+    border-radius: 5px;
+    margin: 0.3rem;
+}
+
+.btn:hover {
+    opacity: 0.8;
+    color: #000;
+}
+
+/* Style of hr line */
+
+hr.style-seven {
+    overflow: visible;
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+
+hr.style-seven:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+/* footer style  */
+
+.footer-info {
+    background: rgb(243, 243, 235);
+    background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgba(221, 168, 107, 0) 39%, rgba(230, 155, 42, 1) 100%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.footer-info h4,
+.footer-info .copy-right {
+    padding-top: 8px;
+}
+
+.footer-info .number {
+    border-bottom: 1px solid #000;
+    border-bottom-left-radius: 50px 20px;
+    padding-bottom: 1rem;
+}
+
+.footer-info .copy-right {
+    border-bottom: 1px solid #000;
+    border-bottom-right-radius: 50px 20px;
+}
+
+.footer-info h4 {
+    font-size: 0.9rem;
+}

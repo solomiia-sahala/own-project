@@ -68,3 +68,7 @@ body {
     border-radius: 5px;
     margin: 0.3rem;
 }
+.btn:hover {
+    opacity: 0.8;
+    color: #000;
+}
