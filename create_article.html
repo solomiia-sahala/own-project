@@ -40,7 +40,7 @@
 
     </section>
 
-<!-- 
+    <!-- 
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script> -->
@@ -62,8 +62,18 @@
 
     <script>
 
+        //get user nickname
+        async function getUserNickname(id) {
+            let response = await fetch(`https://myourway.firebaseio.com/users/${id}/nickname.json`);
+            if (response.ok) {
+                return await response.json();
+            } else {
+                alert(`Error: ${response.status}`);
+            }
+        }
+
         // send user form with nessesary data for article
-        async function sendForm(imgUrl) {
+        async function sendForm(imgUrl, user, nickname) {
             let response = await fetch('https://myourway.firebaseio.com/trip-articles.json', {
                 method: 'POST',
                 header: {
@@ -72,9 +82,14 @@
                 body: JSON.stringify({
                     'header': document.getElementById('header-name').value,
                     'description': document.getElementById('description').value,
-                    'image': imgUrl
+                    'image': imgUrl,
+                    'author': {
+                        'id': user,
+                        'nickname': nickname,
+                    },
                 })
             })
+            return await response.json();
         }
 
         async function uploadImage(file) {
@@ -89,22 +104,25 @@
             let uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 
             // Listen for state changes, errors, and completion of the upload.
-           return new Promise(function(resolve, reject) {
-               uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                   null,
-                   error => reject(error.code),
-                   () => {
-                       // Upload completed successfully, now we can get the download URL
-                       uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-                           resolve(downloadURL) ;
-                       });
-                   })
-           })
+            return new Promise(function (resolve, reject) {
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                    null,
+                    error => reject(error.code),
+                    () => {
+                        // Upload completed successfully, now we can get the download URL
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            resolve(downloadURL);
+                        });
+                    })
+            })
         }
 
         document.getElementById('submit-form').onclick = async function () {
+            let user = fireAuth.currentUser.uid;
             let image = await uploadImage(document.getElementById('image').files[0]);
-            await sendForm(image);
+            let nickname = await getUserNickname(user);
+            let json = await sendForm(image, user, nickname);
+            await linkArticleId(user, json.name)
             window.location.pathname = '';
         }
 
@@ -112,6 +130,17 @@
             window.location.pathname = `/`;
         }
 
+        async function linkArticleId(id, articleId) {
+            await fetch(`https://myourway.firebaseio.com/users/${id}/articles.json`, {
+                method: 'PATCH',
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    [articleId]: 1,
+                })
+            })
+        }
 
     </script>
 
