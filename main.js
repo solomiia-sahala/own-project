@@ -18,6 +18,13 @@ app.get('/sing_up', (request, response) => {
 app.get('/user_profile/:id', (request, response) => {
     response.sendFile(__dirname + '/my_profile.html')
 })
+app.get('/user_articles/:id', (request, response) => {
+    response.sendFile(__dirname + '/user_articles.html')
+})
+
+app.get('/help', (request, response) => {
+    response.sendFile(__dirname + '/help.html')
+})
 
 app.listen(port, (err) => {
     if (err) {

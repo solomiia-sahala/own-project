@@ -9,6 +9,7 @@
     <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
     <title>Share Travel Way</title>
 </head>
 
@@ -56,8 +57,8 @@
                     <div class="dropdown-content">
                         <!-- <a href="my_profile">My profile</a> -->
                         <a onclick="userProfile();">My profile</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a onclick="userArticles();">Articles</a>
+                        <a href="help">Help</a>
                         <button id="logOut" class="btn">Log out!</button>
                     </div>
                 </div>
@@ -77,11 +78,70 @@
 
     <hr class="style-seven">
 
-    <section id="blog">
+
+
+    <section class="container">
         <h2>Find more info with our <span class="colored-word">articles!</span></h2>
+        <div class="add-article">
+            <h3><i class="fas fa-pencil-alt"></i> Or share your story with us</h3>
+            <a href="create_article"><span>Create article</span></a>
+        </div>
+
+        <!-- <div class="box-paginacao">
+            <input type="radio" name="input-paginacao" id="paginacao1" checked>
+            <input type="radio" name="input-paginacao" id="paginacao2">
+            <input type="radio" name="input-paginacao" id="paginacao3">
+            <input type="radio" name="input-paginacao" id="paginacao4">
+            <div class="box-vitrines">
+                <ul>
+                    <div class="vitrine1">
+                        <h2>Pagina 1</h2>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                       
+                    </div>
+                    <div class="vitrine2">
+                        <h2>Pagina 2</h2>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                    </div>
+                    <div class="vitrine3">
+                        <h2>Pagina 3</h2>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                    </div>
+                    <div class="vitrine4">
+                        <h2>Pagina 4</h2>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                    </div>
+                    <div class="vitrine4">
+                        <h2>Pagina 4</h2>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                        <li>Vitrine</li>
+                    </div>
+                </ul>
+                <div class="btn-paginacao">
+                    <ul>
+                        <li><label for="paginacao1">1</label></li>
+                        <li><label for="paginacao2">2</label></li>
+                        <li><label for="paginacao3">3</label></li>
+                        <li><label for="paginacao4">4</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>  -->
+
+    </section>
+    <section id="blog">
         <div class="articles-container" id="grid_container">
             <!-- <article class="post">
-                <img src="./img/house-on-green-landscape-against-sky-314937.jpg" alt="article-1">
+                <img src="http://localhost:3000/static/img/man-wearing-red-dress-shirt-beside-water-buffalo-752398.jpg" alt="article-1">
                 <div>
                     <h3>The least-visited countries in Europe</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad laudantium quisquam corrupti
@@ -90,9 +150,9 @@
                     <button class="btn">Read More...</button>
                 </div>
 
-            </article>
+            </article> -->
 
-            <article class="post">
+            <!--  <article class="post">
                 <img src="./img/man-standing-on-green-grass-field-under-white-sky-1660898.jpg" alt="article-2">
                 <div>
                     <h3>Walk hard, play hard</h3>
@@ -114,11 +174,12 @@
                 </div>
             </article> -->
         </div>
-    </section>
+        <div class="pagination">
+            <!-- <button id="lessButton" onclick="showLess()"><i class="fas fa-caret-square-up"></i></button> -->
+            <button id="moreButton" onclick="showMore()"><i class="fas fa-caret-square-down"></i></button>
+        </div>
 
-    <div class="add-article">
-        <a href="create_article"><span>Create article</span></a>
-    </div>
+    </section>
 
     <hr class="style-seven">
 
@@ -183,10 +244,14 @@
             let response = await fetch(url);
             if (response.ok) {
                 let json = await response.json();
+                if (!json) {
+                    return;
+                }
                 let keys = Object.keys(json);
                 for (let key of keys) {
                     createElem(json[key], key);
                 }
+                showMore();
             } else {
                 alert(`Error: ${response.status}`);
             }
@@ -196,7 +261,8 @@
 
         // generate new article in grid_container
         function createElem(article, key) {
-            grid_container.insertAdjacentHTML('beforeend', '<article class="post">'
+            grid_container.insertAdjacentHTML('beforeend', '<article class="post hidden">'
+                + `<div id="article-header"><div id="location"><i class="fas fa-map-pin"></i> Location</div><div>@<a href="user_articles/${article.author.id}">${article.author.nickname}</a></div></div>`
                 + `<img src="${article.image}" alt="article-2">`
                 + `<div><h3>${article.header}</h3>`
                 + `<p>${article.description}</p>`
@@ -218,23 +284,8 @@
         // if (header && description && image) {
         //     createElem(header, description, image);
         // } 
+
         getData(url);
-
-        //log in feature
-
-        //TODO extract to js modele to avoid duplication
-        let firebaseConfig = {
-            apiKey: "AIzaSyCfUMs20JHDtBfXUWKFlO5FQWQqjW2xQhg",
-            authDomain: "myourway.firebaseapp.com",
-            databaseURL: "https://myourway.firebaseio.com",
-            projectId: "myourway",
-            storageBucket: "myourway.appspot.com",
-            messagingSenderId: "214953978170",
-            appId: "1:214953978170:web:532e1bafdd6ce62d064803"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
 
         firebase.auth().onAuthStateChanged(user => {
             //TODO make more meaningful)
@@ -280,10 +331,10 @@
         // display user name in header
 
         async function getUserName(id) {
-            let response = await fetch(`https://myourway.firebaseio.com/users/${id}.json`);
+            let response = await fetch(`https://myourway.firebaseio.com/users/${id}/name.json`);
             if (response.ok) {
-                let json = await response.json();
-                document.getElementById('name').innerHTML = `Hello, ${json.name}`;
+                let name = await response.json();
+                document.getElementById('name').innerHTML = `Hello, ${name}`;
             } else {
                 alert(`Error: ${response.status}`);
             }
@@ -294,7 +345,49 @@
 
         function userProfile() {
             let user = firebase.auth().currentUser.uid;
-            window.location.pathname = `/user_profile/${user}`; 
+            window.location.pathname = `/user_profile/${user}`;
+        }
+        function userArticles() {
+            let user = firebase.auth().currentUser.uid;
+            window.location.pathname = `/user_articles/${user}`;
+        }
+
+
+        // pagination ream more and less buttons
+
+        function showMore() {
+            let listData = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.shown)')).slice(0, 3);
+            // let listData = grid_container.querySelectorAll('article');
+            for (let i = 0; i < listData.length; i++) {
+                listData[i].className = 'post shown';
+            }
+            switchButtons();
+        }
+
+        // function showLess() {
+        //     let listData = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.hidden)')).slice(-3);
+        //     for (let i = 0; i < listData.length; i++) {
+        //         listData[i].className = 'post hidden';
+        //     }
+        //     switchButtons();
+        // }
+
+        function switchButtons() {
+            let hiddenElements = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.shown)'));
+            if (hiddenElements.length == 0) {
+                document.getElementById('moreButton').style.display = 'none';
+            }
+            else {
+                document.getElementById('moreButton').style.display = 'block';
+            }
+
+            // let shownElements = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.hidden)'))
+            // if (shownElements.length == 0) {
+            //     document.getElementById('lessButton').style.display = 'none';
+            // }
+            // else {
+            //     document.getElementById('lessButton').style.display = 'block';
+            // }
         }
 
 

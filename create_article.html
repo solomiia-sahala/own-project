@@ -10,11 +10,11 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
     <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
     <title>Create Article</title>
 </head>
 
 <body>
-
     <section id="add-form">
 
         <h1>Create article</h1>
@@ -34,36 +34,114 @@
                     <input id="image" type="file">
                 </div>
             </form>
+            <div id="googleMap"></div>
+            <div id="box">
+                <div id="box-inner"></div>
+                <!-- <label for="comment">Comment</label> -->
+                <textarea id="comment" placeholder="Enter info about this place"></textarea>
+                <button id="ok" onclick="buttonOk();"><i class="fas fa-check-circle"></i></button><button
+                    id="cancel">X</button>
+
+            </div>
+
             <button id="submit-form" class="btn">Submit</button>
         </div>
+
         <button id="back-btn" class="btn">Back</button>
 
     </section>
 
-<!-- 
-    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script> -->
+    <script>
+        let map;
+        let coordinate;
+        let markers = [];
+        let geocoder;
+        function myMap() {
+            let mapProp = {
+                center: new google.maps.LatLng(51.508742, -0.120850),
+                zoom: 5,
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            geocoder = new google.maps.Geocoder();
 
-    <!-- <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyCfUMs20JHDtBfXUWKFlO5FQWQqjW2xQhg",
-            authDomain: "myourway.firebaseapp.com",
-            databaseURL: "https://myourway.firebaseio.com",
-            projectId: "myourway",
-            storageBucket: "myourway.appspot.com",
-            messagingSenderId: "214953978170",
-            appId: "1:214953978170:web:532e1bafdd6ce62d064803"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script> -->
+            map.addListener('click', function (e) {
+                document.body.style.overflow = 'hidden';
+                document.getElementById('box').style.setProperty('display', 'block');
+                coordinate = e.latLng;
+            });
+
+        }
+
+        async function getCountry(location) {
+            geocoder.geocode({ 'location': location }, function (results, status) {
+                console.log(status);
+                console.log(results);
+                if (status == 'OK') {
+                    for (let address in results[0].address_components) {
+                        if (address.types.includes('country')) {
+                            return address.long_name;
+                        }
+                    }
+                    throw new Error(status);
+                } else {
+                    throw new Error(status);
+                }
+            })
+
+        }
+
+
+        function placeMarker(latLng, map, text) {
+            let marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+            map.panTo(latLng);
+
+            let infowindow = new google.maps.InfoWindow({
+                content: text
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+            markers.push({
+                'latLng': latLng,
+                'text': text
+            });
+        }
+
+        document.getElementById('ok').onclick = function () {
+            let text = document.getElementById('comment').value;
+            placeMarker(coordinate, map, text);
+            document.body.style.overflow = 'auto';
+            document.getElementById('box').style.setProperty('display', 'none');
+            document.getElementById('comment').value = '';
+        }
+
+        document.getElementById('cancel').onclick = function () {
+            document.body.style.overflow = 'auto';
+            document.getElementById('box').style.setProperty('display', 'none');
+            document.getElementById('comment').value = '';
+        }
+
+    </script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_h1uX4c2dF8uk_rMkPTxGrb4xeX3FawA&callback=myMap"></script>
 
     <script>
 
+        //get user nickname
+        async function getUserNickname(id) {
+            let response = await fetch(`https://myourway.firebaseio.com/users/${id}/nickname.json`);
+            if (response.ok) {
+                return await response.json();
+            } else {
+                alert(`Error: ${response.status}`);
+            }
+        }
+
         // send user form with nessesary data for article
-        async function sendForm(imgUrl) {
+        async function sendForm(imgUrl, user, nickname, country) {
             let response = await fetch('https://myourway.firebaseio.com/trip-articles.json', {
                 method: 'POST',
                 header: {
@@ -72,9 +150,16 @@
                 body: JSON.stringify({
                     'header': document.getElementById('header-name').value,
                     'description': document.getElementById('description').value,
-                    'image': imgUrl
+                    'image': imgUrl,
+                    'author': {
+                        'id': user,
+                        'nickname': nickname,
+                    },
+                    'markers': markers,
+                    'country': country
                 })
             })
+            return await response.json();
         }
 
         async function uploadImage(file) {
@@ -89,29 +174,47 @@
             let uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 
             // Listen for state changes, errors, and completion of the upload.
-           return new Promise(function(resolve, reject) {
-               uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                   null,
-                   error => reject(error.code),
-                   () => {
-                       // Upload completed successfully, now we can get the download URL
-                       uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-                           resolve(downloadURL) ;
-                       });
-                   })
-           })
+            return new Promise(function (resolve, reject) {
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                    null,
+                    error => reject(error.code),
+                    () => {
+                        // Upload completed successfully, now we can get the download URL
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            resolve(downloadURL);
+                        });
+                    })
+            })
         }
 
         document.getElementById('submit-form').onclick = async function () {
-            let image = await uploadImage(document.getElementById('image').files[0]);
-            await sendForm(image);
-            window.location.pathname = '';
+            let user = fireAuth.currentUser.uid;
+            let image = uploadImage(document.getElementById('image').files[0]);
+            let nickname = getUserNickname(user);
+            let country = getCountry(markers[0].latLng);
+            let results = await Promise.all([image, nickname, country]);
+            let json = await sendForm(results[0], user, results[1], results[2]);
+            await linkArticleId(user, json.name)
+            // window.location.pathname = '';
         }
 
         document.getElementById('back-btn').onclick = function () {
             window.location.pathname = `/`;
         }
 
+        async function linkArticleId(id, articleId) {
+            await fetch(`https://myourway.firebaseio.com/users/${id}/articles.json`, {
+                method: 'PATCH',
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    [articleId]: 1,
+                })
+            })
+        }
+
+        // get location from google map
 
     </script>
 

@@ -8,8 +8,13 @@
 
 body {
     font-family: 'Merriweather', serif;
-    background-color: #f3f3eb;
+    background-color: #f2f2f2;
 }
+
+.colored-word {
+    background-color: #f99500;
+    padding: 3px;
+  }
 
 section #grid_content {
     display: grid;
@@ -20,16 +25,22 @@ section #grid_content {
 
 /* image properties */
 section #grid_content .image {
-    width: 50vw;
-    height: 80vh;
+    width: 500px;
+    height: 500px;
 }
 
 section #grid_content .image img {
     background-repeat: no-repeat;
-    height: 100%;
-    max-width: 100%;
-    display: block;
-    margin: auto;
+    width: 450px;
+    height: 420px;
+    object-fit: contain;
+    margin-left: 1rem;
+}
+section #grid_content .image .images {
+    width: 490px;
+    height: 60px;
+    background-color: #f99500;
+    margin-left: 0.3rem;
 }
 
 /* text properties */
@@ -45,8 +56,8 @@ section #grid_content .content h1 {
 /* button styling  */
 
 section button {
-    display: block;
-    margin: auto;
+    margin: 1rem;
+  text-align: left;
 }
 
 .btn {
@@ -80,11 +91,58 @@ hr.style-seven:before {
     border-radius: 20px;
 }
 
+/* google map */
+
+#googleMap {
+    width: 100%;
+    height: 430px;
+}
+
+
+/* comments */
+
+.comments {
+    margin: 1rem;
+}
+.comments h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/*added comments */
+
+#added_comments {
+    margin: 1rem;
+    width: 30%;
+}
+
+.user_comment {
+    margin-bottom: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+    /* border: 1px dotted #000; */
+    /* background-color: rgb(201, 193, 148); */
+}
+
+.user_comment h5 {
+    margin-top: 0.3rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #000;
+    text-shadow: 2px 2px 2px #f99500;
+}
+
+.user_comment p {
+    margin-top: 0.2rem;
+    background-color: #fff;
+    text-align: justify;
+}
+
+
 /* footer style */
 
 .footer-info {
     background: rgb(243, 243, 235);
-    background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgba(153, 145, 118, 1) 39%, rgba(122, 110, 70, 1) 100%);
+    background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgb(221, 168, 107) 39%, rgb(230, 155, 42) 100%);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 1rem;
