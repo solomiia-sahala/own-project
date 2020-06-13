@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
+    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <link rel="stylesheet" href="http://localhost:3000/static/styles/user_articles_style.css">
+    <script src="http://localhost:3000/static/js/user_articles.js"></script>
+    <title>User Articles</title>
+</head>
+
+<body>
+    <button id="back-btn" class="btn" onclick="backButton();"><i class="fas fa-arrow-circle-left"></i> Main page</button> 
+    <h1 id="nameSurname"></h1>
+    <hr>
+    <section>
+        <div class="grid">
+            <div id="user_image">
+            </div>
+            <div class="private_info">
+                <div id="about">
+                    <h4>About me:</h4>
+                    <p></p>
+                </div>
+                <div id="travelStory">
+                    <h4>My first travelling:</h4>
+                    <p></p>
+                </div>
+                <div id="hobbies">
+                    <h4>Hobbies:</h4>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="style-seven">
+    <div class="articles-info">
+        <p><i class="fas fa-camera-retro"></i> All articles</p>
+    </div>
+    <hr class="style-seven">
+    <section>
+        <div id="grid_articles">
+        
+        </div>
+    </section>
+
+</body>
+
+</html>

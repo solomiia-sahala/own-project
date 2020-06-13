@@ -58,7 +58,7 @@
                         <!-- <a href="my_profile">My profile</a> -->
                         <a onclick="userProfile();">My profile</a>
                         <a onclick="userArticles();">Articles</a>
-                        <a href="#">Link 3</a>
+                        <a href="help">Help</a>
                         <button id="logOut" class="btn">Log out!</button>
                     </div>
                 </div>
@@ -79,11 +79,15 @@
     <hr class="style-seven">
 
 
- 
+
     <section class="container">
         <h2>Find more info with our <span class="colored-word">articles!</span></h2>
+        <div class="add-article">
+            <h3><i class="fas fa-pencil-alt"></i> Or share your story with us</h3>
+            <a href="create_article"><span>Create article</span></a>
+        </div>
 
-       <!-- <div class="box-paginacao">
+        <!-- <div class="box-paginacao">
             <input type="radio" name="input-paginacao" id="paginacao1" checked>
             <input type="radio" name="input-paginacao" id="paginacao2">
             <input type="radio" name="input-paginacao" id="paginacao3">
@@ -133,7 +137,7 @@
             </div>
         </div>  -->
 
-    </section> 
+    </section>
     <section id="blog">
         <div class="articles-container" id="grid_container">
             <!-- <article class="post">
@@ -148,7 +152,7 @@
 
             </article> -->
 
-           <!--  <article class="post">
+            <!--  <article class="post">
                 <img src="./img/man-standing-on-green-grass-field-under-white-sky-1660898.jpg" alt="article-2">
                 <div>
                     <h3>Walk hard, play hard</h3>
@@ -170,11 +174,12 @@
                 </div>
             </article> -->
         </div>
-    </section>
+        <div class="pagination">
+            <!-- <button id="lessButton" onclick="showLess()"><i class="fas fa-caret-square-up"></i></button> -->
+            <button id="moreButton" onclick="showMore()"><i class="fas fa-caret-square-down"></i></button>
+        </div>
 
-    <div class="add-article">
-        <a href="create_article"><span>Create article</span></a>
-    </div>
+    </section>
 
     <hr class="style-seven">
 
@@ -246,6 +251,7 @@
                 for (let key of keys) {
                     createElem(json[key], key);
                 }
+                showMore();
             } else {
                 alert(`Error: ${response.status}`);
             }
@@ -255,8 +261,8 @@
 
         // generate new article in grid_container
         function createElem(article, key) {
-            grid_container.insertAdjacentHTML('beforeend', '<article class="post">'
-                + `<div id="article-header">@<a href="#">${article.author.nickname}</a></div>`
+            grid_container.insertAdjacentHTML('beforeend', '<article class="post hidden">'
+                + `<div id="article-header"><div id="location"><i class="fas fa-map-pin"></i> Location</div><div>@<a href="user_articles/${article.author.id}">${article.author.nickname}</a></div></div>`
                 + `<img src="${article.image}" alt="article-2">`
                 + `<div><h3>${article.header}</h3>`
                 + `<p>${article.description}</p>`
@@ -344,6 +350,44 @@
         function userArticles() {
             let user = firebase.auth().currentUser.uid;
             window.location.pathname = `/user_articles/${user}`;
+        }
+
+
+        // pagination ream more and less buttons
+
+        function showMore() {
+            let listData = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.shown)')).slice(0, 3);
+            // let listData = grid_container.querySelectorAll('article');
+            for (let i = 0; i < listData.length; i++) {
+                listData[i].className = 'post shown';
+            }
+            switchButtons();
+        }
+
+        // function showLess() {
+        //     let listData = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.hidden)')).slice(-3);
+        //     for (let i = 0; i < listData.length; i++) {
+        //         listData[i].className = 'post hidden';
+        //     }
+        //     switchButtons();
+        // }
+
+        function switchButtons() {
+            let hiddenElements = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.shown)'));
+            if (hiddenElements.length == 0) {
+                document.getElementById('moreButton').style.display = 'none';
+            }
+            else {
+                document.getElementById('moreButton').style.display = 'block';
+            }
+
+            // let shownElements = Array.prototype.slice.call(document.querySelectorAll('#grid_container article:not(.hidden)'))
+            // if (shownElements.length == 0) {
+            //     document.getElementById('lessButton').style.display = 'none';
+            // }
+            // else {
+            //     document.getElementById('lessButton').style.display = 'block';
+            // }
         }
 
 

@@ -127,3 +127,7 @@ function changePassword() {
     });
 }
    
+// back button
+function backButton() {
+         window.location.pathname = `/`;
+}

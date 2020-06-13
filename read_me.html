@@ -5,13 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,100;1,300&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="http://localhost:3000/static/read_more_style.css">
     <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
     <title>Read me Page</title>
 </head>
 
 <body>
     <section>
+        <button id="back-btn" class="btn"><i class="fas fa-arrow-circle-left"></i> Main page</button>
         <div id="grid_content">
             <!-- <div class="image">
                 <img src="http://localhost:3000/static/img/photo-of-woman-sitting-on-brown-wooden-chair-in-the-middle-2560896.jpg"
@@ -24,7 +31,22 @@
                     expedita excepturi, numquam ratione quae incidunt.</p>
             </div> -->
         </div>
-        <button id="back-btn" class="btn">Back</button>
+    </section>
+    <hr class="style-seven">
+    <div id="googleMap"></div>
+    <hr class="style-seven">
+    <section>
+        <div class="comments">
+            <h3>Add Comment:</h3>
+            <textarea id="comment" cols="50" rows="5"></textarea><br>
+            <button class="btn" onclick="getUserNickname()">Save</button>
+        </div>
+        <div id="added_comments">
+            <!-- @nickname
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam tenetur corrupti temporibus tempore
+                reprehenderit. Aspernatur delectus mollitia vitae reiciendis. Numquam?</p> -->
+        </div>
+
     </section>
     <hr class="style-seven">
     <footer>
@@ -61,15 +83,14 @@
 
         const path = window.location.pathname.split('/');
         let id = path[path.length - 1];
-
-        
+        let articleInfo;
 
         async function getData(id) {
             const url = `https://myourway.firebaseio.com/trip-articles/${id}.json`;
             let response = await fetch(url);
             if (response.ok) {
-                let json = await response.json();
-                displayArticle(json);
+                articleInfo = await response.json();
+                displayArticle(articleInfo);
             } else {
                 alert(`Error: ${response.status}`);
             }
@@ -77,9 +98,16 @@
 
         function displayArticle(id) {
             grid_content.insertAdjacentHTML('beforeend', '<div class="image">'
-                + `<img src="${id.image}" alt="article"></div>`
-                + `<div class="content"><h1>${id.header}</h1>`
+                + `<img src="${id.image}" alt="article"><div class="images"></div></div>`
+                + `<div class="content"><h1 class="colored-word">${id.header}</h1>`
                 + `<p>${id.description}</p></div>`);
+            //TO DO make some synchronization
+            if (id.markers) {
+                id.markers.forEach(marker => {
+                    placeMarker(marker);
+                })
+            }
+
         }
 
         getData(id);
@@ -87,8 +115,95 @@
         document.getElementById('back-btn').onclick = function () {
             window.location.pathname = `/`;
         }
+        let map;
+        //initialize map
+        function myMap() {
+            let mapProp = {
+                center: new google.maps.LatLng(51.508742, -0.120850),
+                zoom: 5,
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        }
+
+        function placeMarker(location) {
+            let marker = new google.maps.Marker({
+                position: location.latLng,
+                map: map
+            });
+            map.panTo(location.latLng);
+
+            let infowindow = new google.maps.InfoWindow({
+                content: location.text
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+
+        // add comment feature
+        async function saveComment(nick) {
+            let text = document.getElementById('comment').value;
+            if (text) {
+                await fetch(`https://myourway.firebaseio.com/trip-articles/${id}/comments.json`, {
+                    method: 'POST',
+                    header: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        'message': text,
+                        'nickname': nick,
+                        'user_id': firebase.auth().currentUser.uid,
+                        'time': { '.sv': 'timestamp' }
+
+                    })
+                })
+                document.getElementById('comment').value = '';
+            } else {
+                alert('Please, enter your comment');
+            }
+        }
+
+
+        async function getUserNickname() {
+            let response = await fetch(`https://myourway.firebaseio.com/users/${firebase.auth().currentUser.uid}/nickname.json`);
+            if (response.ok) {
+                let nickname = await response.json();
+                saveComment(nickname);
+            } else {
+                alert(`Error: ${response.status}`);
+            }
+        }
+
+
+        // console.log(`/trip-atricles/${id}/comments`)
+        let commentsRef = firebase.database().ref(`/trip-articles/${id}/comments`);
+        commentsRef.on('child_added', function (data) {
+            displayComments(data.val());
+        });
+
+        function displayComments(article) {
+            added_comments.insertAdjacentHTML('afterbegin', `<div class="user_comment"><h5>@${article.nickname}| ${convertDate(article.time)}</h5>`
+                + `<p>${article.message}</p></div><hr>`)
+        }
+
+        function convertDate(date) {
+            let user_time = new Date(date);
+            let now = new Date();
+            now.setHours(0);
+            now.setMinutes(0);
+            now.setSeconds(0);
+            now.setMilliseconds(0);
+            if (now < date) {
+                return `${user_time.getHours()}:${user_time.getMinutes()}:${user_time.getSeconds()}`;
+            }
+            console.log('re')
+            return user_time.toDateString();
+        }
 
     </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_h1uX4c2dF8uk_rMkPTxGrb4xeX3FawA&callback=myMap"></script>
 
 </body>
 
