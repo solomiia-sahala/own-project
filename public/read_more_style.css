@@ -14,7 +14,7 @@ body {
 .colored-word {
     background-color: #f99500;
     padding: 3px;
-  }
+}
 
 section #grid_content {
     display: grid;
@@ -24,6 +24,7 @@ section #grid_content {
 }
 
 /* image properties */
+
 section #grid_content .image {
     width: 500px;
     height: 500px;
@@ -36,14 +37,15 @@ section #grid_content .image img {
     object-fit: contain;
     margin-left: 1rem;
 }
-section #grid_content .image .images {
-    width: 490px;
-    height: 60px;
-    background-color: #f99500;
-    margin-left: 0.3rem;
+
+
+
+.selected_image {
+    border: 2px solid #f99500;
 }
 
 /* text properties */
+
 section #grid_content .content {
     width: 90%;
     text-align: center;
@@ -57,7 +59,7 @@ section #grid_content .content h1 {
 
 section button {
     margin: 1rem;
-  text-align: left;
+    text-align: left;
 }
 
 .btn {
@@ -98,12 +100,12 @@ hr.style-seven:before {
     height: 430px;
 }
 
-
 /* comments */
 
 .comments {
     margin: 1rem;
 }
+
 .comments h3 {
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
@@ -137,7 +139,6 @@ hr.style-seven:before {
     text-align: justify;
 }
 
-
 /* footer style */
 
 .footer-info {
@@ -165,3 +166,73 @@ hr.style-seven:before {
 .footer-info h4 {
     font-size: 0.9rem;
 }
+
+
+
+
+
+
+.carousel {
+    position: relative;
+    width: 490px;
+
+    height: 80px;
+    padding: 5px 40px 0 40px;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    background: #eee;
+  }
+  
+  .arrow {
+    position: absolute;
+    top: 30px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: block;
+  }
+  
+  .arrow:focus {
+    outline: none;
+  }
+  
+  .arrow:hover {
+    background: #f99500;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .prev {
+    left: 7px;
+  }
+  
+  .next {
+    right: 7px;
+  }
+  
+  .gallery {
+    width: 390px;
+    height: 80px;
+    overflow: hidden;
+  }
+  
+  .gallery ul {
+    height: 80px;
+    width: 9999px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: margin-left 250ms;
+    font-size: 0;
+  }
+  
+  .gallery li {
+    display: inline-block;
+  }
+
+  .carousel img {
+    width: 110px !important;
+    height: 70px !important;
+    /* делаем этот элемент блочным, чтобы убрать лишнее пространство вокруг картинок */
+    display: block;
+  }
