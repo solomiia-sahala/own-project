@@ -22,7 +22,7 @@
         <div class="container">
             <form>
                 <div class="form-group">
-                    <label for="header-name">Header:</label> <br>
+                    <label for="header-name">Header *:</label> <br>
                     <input type="text" id="header-name">
                 </div>
                 <div class="form-group">
@@ -30,7 +30,7 @@
                     <textarea type="text" id="description"></textarea>
                 </div>
                 <div>
-                    <label for="image">Upload image file:</label> <br>
+                    <label for="image">Upload image file *:</label> <br>
                     <input id="image" type="file" multiple>
                 </div>
             </form>
@@ -141,6 +141,21 @@
             }
         }
 
+
+        function checkemptyField() {
+            let header = document.getElementById('header-name');
+            let imgs = document.getElementById('image');
+            if (!header.value.trim()) {
+                header.classList.add('not_selected');
+                throw new Error('Header input can`t be empty!');
+            }
+
+            if (imgs.files.length == 0) {
+                imgs.classList.add('not_selected');
+                throw new Error('Upload image, please');
+            }
+
+        }
         // send user form with nessesary data for article
         async function sendForm(imgUrl, user, nickname, country) {
             let response = await fetch('https://myourway.firebaseio.com/trip-articles.json', {
@@ -189,14 +204,22 @@
         }
 
         document.getElementById('submit-form').onclick = async function () {
-            let user = fireAuth.currentUser.uid;
-            let image = getAllPhoto(document.getElementById('image').files);
-            let nickname = getUserNickname(user);
-            // let country = getCountry(markers[0].latLng);
-            let results = await Promise.all([image, nickname/*, country*/]);
-            let json = await sendForm(results[0], user, results[1], 'results[2]');
-            await linkArticleId(user, json.name)
-            window.location.pathname = '';
+            document.getElementById('loading-circles').style.display = 'block';
+            try {
+                checkemptyField();
+                let user = fireAuth.currentUser.uid;
+                let image = getAllPhoto(document.getElementById('image').files);
+                let nickname = getUserNickname(user);
+                // let country = getCountry(markers[0].latLng);
+                let results = await Promise.all([image, nickname/*, country*/]);
+                let json = await sendForm(results[0], user, results[1], 'results[2]');
+                await linkArticleId(user, json.name)
+                window.location.pathname = '';
+            } catch (er) {
+                alert(er.message);
+            } finally {
+                document.getElementById('loading-circles').style.display = 'none';
+            }
         }
 
         document.getElementById('back-btn').onclick = function () {
@@ -225,6 +248,8 @@
         // get location from google map
 
     </script>
+<div id="loading-circles"><div id="inner-loading-circles"><div class="lds-hourglass"></div></div></div>
+    
 
 </body>
 
