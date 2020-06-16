@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost:3000/static/create_article_style.css">
+    <link rel="stylesheet" href="/static/create_article_style.css">
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
-    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <script src="/static/js/firebaseConfig.js"></script>
     <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
     <title>Create Article</title>
 </head>
@@ -31,9 +31,10 @@
                 </div>
                 <div>
                     <label for="image">Upload image file:</label> <br>
-                    <input id="image" type="file">
+                    <input id="image" type="file" multiple>
                 </div>
             </form>
+            <p id="note"> <i class="fas fa-star"></i> Note: to add market on map, right click</p>
             <div id="googleMap"></div>
             <div id="box">
                 <div id="box-inner"></div>
@@ -64,7 +65,7 @@
             map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             geocoder = new google.maps.Geocoder();
 
-            map.addListener('click', function (e) {
+            map.addListener('rightclick', function (e) {
                 document.body.style.overflow = 'hidden';
                 document.getElementById('box').style.setProperty('display', 'block');
                 coordinate = e.latLng;
@@ -189,18 +190,25 @@
 
         document.getElementById('submit-form').onclick = async function () {
             let user = fireAuth.currentUser.uid;
-            let image = uploadImage(document.getElementById('image').files[0]);
+            let image = getAllPhoto(document.getElementById('image').files);
             let nickname = getUserNickname(user);
-            let country = getCountry(markers[0].latLng);
-            let results = await Promise.all([image, nickname, country]);
-            let json = await sendForm(results[0], user, results[1], results[2]);
+            // let country = getCountry(markers[0].latLng);
+            let results = await Promise.all([image, nickname/*, country*/]);
+            let json = await sendForm(results[0], user, results[1], 'results[2]');
             await linkArticleId(user, json.name)
-            // window.location.pathname = '';
+            window.location.pathname = '';
         }
 
         document.getElementById('back-btn').onclick = function () {
             window.location.pathname = `/`;
         }
+
+        function getAllPhoto(photos) {
+            let collection = Array.from(photos);
+            return Promise.all(collection.map(photo => uploadImage(photo)));
+        }
+
+        getAllPhoto(document.getElementById('image').files)
 
         async function linkArticleId(id, articleId) {
             await fetch(`https://myourway.firebaseio.com/users/${id}/articles.json`, {

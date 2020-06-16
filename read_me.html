@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,100;1,300&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost:3000/static/read_more_style.css">
+    <link rel="stylesheet" href="/static/read_more_style.css">
     <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <script src="/static/js/firebaseConfig.js"></script>
     <title>Read me Page</title>
 </head>
 
@@ -32,6 +32,20 @@
             </div> -->
         </div>
     </section>
+
+    <!-- 
+    <div id="carousel" class="carousel">
+        <i class="far fa-arrow-alt-circle-left arrow prev"></i>
+        <div class="gallery">
+            <ul class="images" id="add_image">
+
+            </ul>
+        </div>
+        <i class="far fa-arrow-alt-circle-right arrow next"></i>
+    </div> -->
+
+
+
     <hr class="style-seven">
     <div id="googleMap"></div>
     <hr class="style-seven">
@@ -84,6 +98,7 @@
         const path = window.location.pathname.split('/');
         let id = path[path.length - 1];
         let articleInfo;
+        let selected_image;
 
         async function getData(id) {
             const url = `https://myourway.firebaseio.com/trip-articles/${id}.json`;
@@ -98,7 +113,10 @@
 
         function displayArticle(id) {
             grid_content.insertAdjacentHTML('beforeend', '<div class="image">'
-                + `<img src="${id.image}" alt="article"><div class="images"></div></div>`
+                + `<img id="largeImg" src="${id.image[0]}" alt="article">`
+                + `<div id="carousel" class="carousel"> <i class="far fa-arrow-alt-circle-left arrow prev"></i>`
+                + `<div class="gallery"><ul class="images" id="add_image"></ul></div>`
+                + `<i class="far fa-arrow-alt-circle-right arrow next"></i></div></div>`
                 + `<div class="content"><h1 class="colored-word">${id.header}</h1>`
                 + `<p>${id.description}</p></div>`);
             //TO DO make some synchronization
@@ -107,8 +125,39 @@
                     placeMarker(marker);
                 })
             }
+            if (id.image.length > 1) {
+                id.image.map(image => displayImages(image));
+
+                selected_image = add_image.getElementsByTagName('img')[0];
+                selected_image.classList.add('selected_image');
+            } else {
+                document.getElementById('carousel').style.display = 'none';
+            }
+
+            add_image.onclick = function (event) {
+                selected_image.classList.remove('selected_image');
+                selected_image = event.target.closest('img');
+                if (!selected_image) return;
+                showThumbnail(selected_image.src);
+                selected_image.classList.add('selected_image');
+                event.preventDefault();
+            }
+            drowImage();
+            // carouselFeature();
+        }
+
+        function showThumbnail(href) {
+            largeImg.src = href;
 
         }
+
+
+        function displayImages(img) {
+            add_image.insertAdjacentHTML('beforeend', `<li><img src="${img}" alt="article"></li>`);
+        }
+
+        // carousel for images
+
 
         getData(id);
 
@@ -194,16 +243,59 @@
             now.setSeconds(0);
             now.setMilliseconds(0);
             if (now < date) {
-                return `${user_time.getHours()}:${user_time.getMinutes()}:${user_time.getSeconds()}`;
+                let hours = formatTime(user_time.getHours());
+                let minutes = formatTime(user_time.getMinutes());
+                let seconds = formatTime(user_time.getSeconds());
+
+                return `${hours}:${minutes}:${seconds}`;
             }
-            console.log('re')
             return user_time.toDateString();
+        }
+
+        function formatTime(time) {
+            return (time < 10) ? '0' + time : time;
         }
 
     </script>
 
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_h1uX4c2dF8uk_rMkPTxGrb4xeX3FawA&callback=myMap"></script>
+
+
+    <script>
+        let position = 0;
+        function drowImage() {
+
+            let i = 1;
+            for (let li of carousel.querySelectorAll('li')) {
+                li.style.position = 'relative';
+                li.insertAdjacentHTML('beforeend', `<span style="position:absolute;left:0;top:0">${i}</span>`);
+                i++;
+            }
+
+            let width = 130;
+            let count = Math.min(3, carousel.querySelectorAll('li').length);
+
+            let list = carousel.querySelector('ul');
+            let listElems = carousel.querySelectorAll('li');
+
+
+            carousel.querySelector('.prev').onclick = function () {
+                position += width * count;
+
+                position = Math.min(position, 0)
+                list.style.marginLeft = position + 'px';
+            };
+
+            carousel.querySelector('.next').onclick = function () {
+                position -= width * count;
+
+                position = Math.max(position, -width * (listElems.length - count));
+                list.style.marginLeft = position + 'px';
+            };
+
+        }
+    </script>
 
 </body>
 

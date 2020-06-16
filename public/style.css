@@ -235,9 +235,10 @@ hr.style-seven:before {
 }
 
 #blog .articles-container .post img {
-  height: 250px;
   width: 400px;
-  object-fit: cover;
+  height: 250px;
+  /* max-width: 400px; */
+  object-fit: contain;
 }
 
 #blog .articles-container .post div {

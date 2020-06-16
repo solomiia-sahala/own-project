@@ -5,7 +5,7 @@
 
 body {
     box-sizing: border-box;
-    background: url('http://localhost:3000/static/img/nature-photography-2742812.jpg') no-repeat center center/cover;
+    background: url('/static/img/nature-photography-2742812.jpg') no-repeat center center/cover;
     font-family: 'Merriweather', serif;
 }
 

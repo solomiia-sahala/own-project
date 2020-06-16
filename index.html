@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="http://localhost:3000/static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/554bbb5ec0.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script src="http://localhost:3000/static/js/firebaseConfig.js"></script>
+    <script src="/static/js/firebaseConfig.js"></script>
     <title>Share Travel Way</title>
 </head>
 
@@ -44,13 +44,13 @@
         <div id="header-container">
 
             <video autoplay muted loop id="myVideo">
-                <source src="http://localhost:3000/static/video/video2.mp4" type="video/mp4">
+                <source src="/static/video/video2.mp4" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
 
             <!-- <img src="http://localhost:3000/static/img/action-blur-car-child-386009.jpg" alt="car"> -->
             <div id="user">
-                <img id="logo" src="http://localhost:3000/static/img/iconfinder_aeaaqas_3305206.png" alt="">
+                <img id="logo" src="/static/img/iconfinder_aeaaqas_3305206.png" alt="">
                 <div class="topnav dropdown" id="myTopnav">
                     <button id="name" class="dropbtn">
                     </button>
@@ -86,57 +86,6 @@
             <h3><i class="fas fa-pencil-alt"></i> Or share your story with us</h3>
             <a href="create_article"><span>Create article</span></a>
         </div>
-
-        <!-- <div class="box-paginacao">
-            <input type="radio" name="input-paginacao" id="paginacao1" checked>
-            <input type="radio" name="input-paginacao" id="paginacao2">
-            <input type="radio" name="input-paginacao" id="paginacao3">
-            <input type="radio" name="input-paginacao" id="paginacao4">
-            <div class="box-vitrines">
-                <ul>
-                    <div class="vitrine1">
-                        <h2>Pagina 1</h2>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                       
-                    </div>
-                    <div class="vitrine2">
-                        <h2>Pagina 2</h2>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                    </div>
-                    <div class="vitrine3">
-                        <h2>Pagina 3</h2>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                    </div>
-                    <div class="vitrine4">
-                        <h2>Pagina 4</h2>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                    </div>
-                    <div class="vitrine4">
-                        <h2>Pagina 4</h2>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                        <li>Vitrine</li>
-                    </div>
-                </ul>
-                <div class="btn-paginacao">
-                    <ul>
-                        <li><label for="paginacao1">1</label></li>
-                        <li><label for="paginacao2">2</label></li>
-                        <li><label for="paginacao3">3</label></li>
-                        <li><label for="paginacao4">4</label></li>
-                    </ul>
-                </div>
-            </div>
-        </div>  -->
-
     </section>
     <section id="blog">
         <div class="articles-container" id="grid_container">
@@ -152,27 +101,6 @@
 
             </article> -->
 
-            <!--  <article class="post">
-                <img src="./img/man-standing-on-green-grass-field-under-white-sky-1660898.jpg" alt="article-2">
-                <div>
-                    <h3>Walk hard, play hard</h3>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis fugit vitae libero cum,
-                        aspernatur optio esse autem distinctio aperiam! Alias ullam ea iste fuga?</p>
-                    <button class="btn">Read More...</button>
-                </div>
-            </article>
-
-            <article class="post">
-                <img src="./img/road-nature-trees-branches-38537.jpg" alt="article-3">
-                <div>
-                    <h3> The year to plan a trip with friends</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium est nesciunt facilis fuga
-                        quo beatae quaerat, aliquam omnis impedit maiores illo asperiores dolores numquam officia rem
-                        labore, aut sit modi iste. Consequatur facere officia perspiciatis dignissimos in. Minus, iusto
-                        sunt.</p>
-                    <button class="btn">Read More...</button>
-                </div>
-            </article> -->
         </div>
         <div class="pagination">
             <!-- <button id="lessButton" onclick="showLess()"><i class="fas fa-caret-square-up"></i></button> -->
@@ -269,10 +197,7 @@
                 + `<button id="${key}" class="btn readMe_button">Read More...</button></div></article>`);
 
             document.getElementById(key).onclick = function () {
-                // let url = new URL('http://localhost:3000/read_me');
-                // url.searchParams.set('id', key);
                 window.location.pathname = `read_me/${key}`;
-
             }
         }
 
@@ -389,7 +314,6 @@
             //     document.getElementById('lessButton').style.display = 'block';
             // }
         }
-
 
     </script>
 

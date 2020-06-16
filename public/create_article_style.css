@@ -80,6 +80,14 @@ body {
     height: 400px;
 }
 
+#note {
+    width: 62%;
+    font-size: 0.7rem !important;
+    text-align: left;
+    background-color: rgba(107, 138, 221, 0.4);
+    
+}
+
 /*add comment */
 
 #box {
