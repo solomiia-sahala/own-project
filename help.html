@@ -16,21 +16,128 @@
 
     <!-- questions -->
 
-    <p><a href="#Q1">How do I reset or change my password?</a></p>
-    <p><a href="#Q2">Jump to Chapter 10</a></p>
+    <div class="questions">
+        <ul>
+            <li><i class="far fa-question-circle"></i><a href="#Q1" onclick="getQuestionId('Q1')">How do I reset or
+                    change
+                    my password?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q2" onclick="getQuestionId('Q2')">How can I change
+                    profile avatar?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q3" onclick="getQuestionId('Q3')">How to add travel
+                    story?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q4" onclick="getQuestionId('Q4')">Can I upload more that
+                    1 picture to my travel
+                    story?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q5" onclick="getQuestionId('Q5')">Can I add markers on
+                    the Google map for places I
+                    have been visited?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q6" onclick="getQuestionId('Q6')">How to add comment
+                    below the other user`s
+                    atricle</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q7" onclick="getQuestionId('Q7')">How to change my
+                    personal info?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q8" onclick="getQuestionId('Q8')">How can I navigate
+                    between pages?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q9" onclick="getQuestionId('Q9')">How to log out from my
+                    account?</a></li>
+            <li><i class="far fa-question-circle"></i><a href="#Q10" onclick="getQuestionId('Q10')">Can I read more
+                    about user throw his travel
+                    article?</a></li>
+        </ul>
+    </div>
 
+    <div class="answers">
 
+        <h3 id="Q1">How do I reset or change my password?</h3>
+        <p>If you want to change your password for logging in on your MyourWay account, go to the "My profile" and click
+            on
+            the "Change password" button.</p>
 
-    <!-- answers -->
-    <h2 id="Q1">How do I reset or change my password?</h2>
-    <p>If you want to change your password for logging in to your MyourWay account, go to the "My profile" and click on
-        the "Change password" button.</p>
+        <h3 id="Q2">How can I change profile avatar?</h3>
+        <p>If you want to change your avatar on your MyourWay account, go to the "My profile" and click on the "Upload
+            picture" button.</p>
+
+        <h3 id="Q3">How to add travel story?</h3>
+        <p>Go to the main page and click on the button "Create article", fill all input, upload pictures and "Submit"
+            your story!</p>
+
+        <h3 id="Q4">Can I upload more that 1 picture to my travel
+            story?</h3>
+        <p>Yes, you can upload more that 1 picture. Choose a few pictures in the "Upload image" section during creating
+            your article. </p>
+
+        <h3 id="Q5">Can I add markers on the Google map for places I
+            have been visited?</h3>
+        <p>Yes, for adding markers on Google map just right click on place you want to mark.</p>
+
+        <h3 id="Q6">How to add comment below the other user`s
+            atricle</h3>
+        <p>Below the article on the "Read more" page you can find section "Add comment". Just fill input and "Save" your
+            comment. </p>
+
+        <h3 id="Q7">How to change my personal info?</h3>
+        <p> Go to "My profile" on naviagation drop-down menu and click on the icon <i class="far fa-edit"></i>. Change
+            or add your personal info and "Save" it. </p>
+
+        <h3 id="Q8">How can I navigate between pages?</h3>
+        <p>After logging on the main page, hover the mouse on your name on the right top corner of the page, navigation
+            drop down menu will be displayed.</p>
+
+        <h3 id="Q9">How to log out from my account?</h3>
+        <p>On the navigation drow-down menu find button "Log out". Click on it and you will logged out.</p>
+
+        <h3 id="Q10">Can I read more about user throw his travel
+            article?</h3>
+        <p>Yes, click on the user`s nickname under article he added. You will be redirected on the user profile.</p>
+    </div>
+
+    <hr class="style-seven">
+
+    <footer>
+        <section class="footer-info">
+            <div class="number">
+
+                <h4><i class="fas fa-phone fa-1x"></i> Call:</h4>
+                <p>456-23-568</p>
+                <p>125-33-223</p>
+            </div>
+
+            <div class="email">
+                <h4><i class="fas fa-envelope-open-text fa-1x"></i> Contact</h4>
+                <p>myourway@link.com</p>
+            </div>
+
+            <div class="social">
+                <h4>Follow us</h4>
+                <i class="fab fa-twitter fa-2x"></i>
+                <i class="fab fa-facebook fa-2x"></i>
+                <i class="fab fa-instagram fa-2x"></i>
+            </div>
+
+            <div class="copy-right">
+                <p>&copy; 2020 by SS and Wkyn</p>
+                <p>Created by practice lessons</p>
+            </div>
+
+        </section>
+
+    </footer>
 
 
     <script>
         document.getElementById('back-btn').onclick = function () {
             window.location.pathname = `/`;
         }
+
+        let selected_element;
+        function getQuestionId(id) {
+            if (selected_element) {
+                selected_element.classList.remove('selected');
+            }
+            selected_element = document.getElementById(id);
+            selected_element.classList.add('selected');
+        }
+
     </script>
 </body>
 

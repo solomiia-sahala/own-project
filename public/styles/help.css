@@ -1,29 +1,119 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background: #f2f2f2;
-    font-family: 'Merriweather', serif;
-    line-height: 1.5;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  h1 {
-      text-align: center;
-      font-size: 3rem;
-      color: #000;
-      text-shadow: 1px 1px 1px #f2f2f2;
-      margin: 1rem;
-  }
+body {
+  background: #f2f2f2;
+  font-family: 'Merriweather', serif;
+  line-height: 1.5;
+}
 
-  .btn {
-    display: inline-block;
-    border: none;
-    background: #f99500;
-    color: #fff;
-    padding: 0.5rem 1.3rem;
-    border-radius: 5px;
-    margin: 0.3rem;
-  }
+h1 {
+  text-align: center;
+  font-size: 2.3rem;
+  color: #000;
+  text-shadow: 1px 1px 1px #f2f2f2;
+  margin: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  background: #f99500;
+  color: #fff;
+  padding: 0.5rem 1.3rem;
+  border-radius: 5px;
+  margin: 0.3rem;
+}
+
+.questions {
+  margin-left: 2rem;
+  font-size: 1rem;
+}
+
+.questions li {
+  list-style: none;
+  padding: 0.5rem;
+}
+
+.far {
+  background-color: #f99500;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.answers h3 {
+  font-size: 1.2rem;
+  margin-left: 2rem;
+  padding: 0.5rem 0;
+}
+
+.answers p {
+  width: 65%;
+  margin: 1rem 3.5rem;
+  text-align: justify;
+  line-height: 1.6rem;
+}
+
+.selected {
+  color: #f99500;
+}
+
+
+/* Style of hr line */
+
+hr.style-seven {
+  overflow: visible;
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+
+hr.style-seven:before {
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: black;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+
+
+/* footer style */
+
+.footer-info {
+  background: rgb(243, 243, 235);
+  background: linear-gradient(180deg, rgba(243, 243, 235, 1) 0%, rgb(221, 168, 107) 39%, rgb(230, 155, 42) 100%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.footer-info .number {
+  border-bottom: 1px solid #000;
+  border-bottom-left-radius: 50px 20px;
+  padding-bottom: 1rem;
+}
+
+.footer-info .copy-right {
+  border-bottom: 1px solid #000;
+  border-bottom-right-radius: 50px 20px;
+}
+
+.footer-info h4 {
+  font-size: 0.9rem;
+}
+
+#article-header {
+  float: right;
+}
