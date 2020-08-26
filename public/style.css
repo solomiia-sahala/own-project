@@ -350,6 +350,10 @@ hr.style-seven:before {
   float: right;
 }
 
+footer a {
+  color:#000;
+}
+
 /* style for pagination */
 
 .pagination {
